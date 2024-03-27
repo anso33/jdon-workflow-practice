@@ -30,6 +30,11 @@ jobs:
       # 환경 변수로 출력
       - name: Print Secret
         run: echo $TEST
+
+      # 비밀 변수 출력
+      - name: Print Secret
+        run: echo ${{ secrets.TEST }}
+
 #  deploy:
 #    needs: integration
 #    runs-on: ubuntu-latest
