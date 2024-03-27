@@ -10,9 +10,9 @@ on:
 jobs:
   secret-test:
     runs-on: ubuntu-latest
-    if: >
-      github.event.pull_request.merged == true &&
-      contains(join(github.event.pull_request.labels.*.name, ','), 'deploy-test')
+#    if: >
+#      github.event.pull_request.merged == true &&
+#      contains(join(github.event.pull_request.labels.*.name, ','), 'deploy-test')
 
     steps:
       - uses: actions/checkout@v3
