@@ -1,0 +1,39 @@
+name: JDON-workflow-test
+
+on:
+  pull_request:
+    types: [ closed ]
+    branches: [ develop ]
+
+jobs:
+  secret-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      # 비밀 변수 출력
+      - name: Print Secret
+        run: echo ${{ secrets.TEST }}
+#  deploy:
+#    needs: integration
+#    runs-on: ubuntu-latest
+#    if: >
+#      github.event.pull_request.merged == true &&
+#      contains(join(github.event.pull_request.labels.*.name, ','), '🌏 Api-Deploy')
+#    steps:
+#      - name: Deploy to Dev-EC2
+#        uses: appleboy/ssh-action@v1.0.3
+#        with:
+#          host: ${{ secrets.AWS_DEV_HOST }}
+#          username: ${{ secrets.AWS_DEV_USERNAME }}
+#          key: ${{ secrets.AWS_DEV_KEY }}
+#          script: |
+#            cd /home/ec2-user/app
+#            echo "deploy success"
