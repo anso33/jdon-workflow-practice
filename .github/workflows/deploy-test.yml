@@ -2,17 +2,14 @@ name: JDON-workflow-test
 
 on:
   pull_request:
-    types: [ opened, closed ]
-    branches: [ develop ]
+    types: [opened, closed]
+    branches: [develop]
   push:
-    branches: [ test ]
+    branches: [test]
 
 jobs:
   secret-test:
     runs-on: ubuntu-latest
-#    if: >
-#      github.event.pull_request.merged == true &&
-#      contains(join(github.event.pull_request.labels.*.name, ','), 'deploy-test')
 
     steps:
       - uses: actions/checkout@v3
@@ -22,6 +19,12 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+
+      # 특정 label이 붙은 경우에만 실행
+      - name: Run job with specific label
+        if: ${{ github.event_name == 'pull_request' && contains(join(github.event.pull_request.labels.*.name, ','), 'deploy-test') }}
+        run: |
+          echo "This job runs only if the 'deploy-test' label is attached to the pull request."
 
       # 시크릿 변수를 환경 변수로 설정
       - name: Set Secret as Environment Variable
@@ -34,20 +37,3 @@ jobs:
       # 비밀 변수 출력
       - name: Print Secret
         run: echo ${{ secrets.TEST }}
-
-#  deploy:
-#    needs: integration
-#    runs-on: ubuntu-latest
-#    if: >
-#      github.event.pull_request.merged == true &&
-#      contains(join(github.event.pull_request.labels.*.name, ','), '🌏 Api-Deploy')
-#    steps:
-#      - name: Deploy to Dev-EC2
-#        uses: appleboy/ssh-action@v1.0.3
-#        with:
-#          host: ${{ secrets.AWS_DEV_HOST }}
-#          username: ${{ secrets.AWS_DEV_USERNAME }}
-#          key: ${{ secrets.AWS_DEV_KEY }}
-#          script: |
-#            cd /home/ec2-user/app
-#            echo "deploy success"
