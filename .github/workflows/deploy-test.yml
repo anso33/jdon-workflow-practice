@@ -2,8 +2,10 @@ name: JDON-workflow-test
 
 on:
   pull_request:
-    types: [ closed ]
+    types: [ opened, closed ]
     branches: [ develop ]
+  push:
+    branches: [ test ]
 
 jobs:
   secret-test:
@@ -18,9 +20,18 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      # 시크릿 변수를 환경 변수로 설정
+      - name: Set Secret as Environment Variable
+        run: echo "export TEST=${{ secrets.TEST }}" >> $GITHUB_ENV
+
+      # 환경 변수로 출력
+      - name: Print Secret
+        run: echo $TEST
+
       # 비밀 변수 출력
       - name: Print Secret
         run: echo ${{ secrets.TEST }}
+
 #  deploy:
 #    needs: integration
 #    runs-on: ubuntu-latest
