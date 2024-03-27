@@ -1,0 +1,20 @@
+name: deploy-test-1
+
+on:
+  workflow_dispatch:
+    inputs:
+      foo:
+        description: 'A foo input'
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Print Inputs
+        run: |
+          echo "Foo: ${{ github.event.inputs.foo }}"
+
+      - name: Print Secret
+        run: echo ${{ secrets.TEST }}
