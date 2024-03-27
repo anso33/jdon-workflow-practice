@@ -25,7 +25,7 @@ jobs:
 
       # 시크릿 변수를 환경 변수로 설정
       - name: Set Secret as Environment Variable
-        run: echo "export TEST=$TEST" >> $GITHUB_ENV
+        run: echo "export TEST=${{ secrets.TEST }}" >> $GITHUB_ENV
 
       # 환경 변수로 출력
       - name: Print Secret
