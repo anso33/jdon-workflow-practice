@@ -26,27 +26,27 @@ jobs:
       - name: Print Secret
         run: echo ${{ secrets.TEST }}
 
-  api:
-    runs-on: ubuntu-latest
-    if: >
-      ${{ inputs.tags == 'all' || inputs.tags == 'api' }}
-
-    steps:
-      run: echo ${{ secrets.TEST }}
-      - name: Print Secret
-
-  batch:
-    runs-on: ubuntu-latest
-    if: >
-      ${{ inputs.tags == 'all' || inputs.tags == 'batch' }}
-
-    steps:
-      run: echo ${{ secrets.TEST }}
-
-  crawler:
-    runs-on: ubuntu-latest
-    if: >
-      ${{ inputs.tags == 'all' || inputs.tags == 'crawler' }}
-
-    steps:
-      run: echo ${{ secrets.TEST }}
+#  api:
+#    runs-on: ubuntu-latest
+#    if: >
+#      ${{ inputs.tags == 'all' || inputs.tags == 'api' }}
+#
+#    steps:
+#      run: echo ${{ secrets.TEST }}
+#      - name: Print Secret
+#
+#  batch:
+#    runs-on: ubuntu-latest
+#    if: >
+#      ${{ inputs.tags == 'all' || inputs.tags == 'batch' }}
+#
+#    steps:
+#      run: echo ${{ secrets.TEST }}
+#
+#  crawler:
+#    runs-on: ubuntu-latest
+#    if: >
+#      ${{ inputs.tags == 'all' || inputs.tags == 'crawler' }}
+#
+#    steps:
+#      run: echo ${{ secrets.TEST }}
