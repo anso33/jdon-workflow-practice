@@ -3,18 +3,50 @@ name: deploy-test-1
 on:
   workflow_dispatch:
     inputs:
-      foo:
-        description: 'A foo input'
+      tags:
+        description: '배포할 서버'
         required: true
+        type: choice
+        default: 'all'
+        options:
+          - all
+          - api
+          - batch
+          - crawler
 
 jobs:
-  build:
+  default:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Print Inputs
+      - name: Print Tags
         run: |
-          echo "Foo: ${{ github.event.inputs.foo }}"
+          echo ${{ inputs.tags }} 
 
       - name: Print Secret
         run: echo ${{ secrets.TEST }}
+
+  api:
+    runs-on: ubuntu-latest
+    if: >
+      ${{ inputs.tags == 'all' || inputs.tags == 'api' }}
+
+    steps:
+      run: echo ${{ secrets.TEST }}
+      - name: Print Secret
+
+  batch:
+    runs-on: ubuntu-latest
+    if: >
+      ${{ inputs.tags == 'all' || inputs.tags == 'batch' }}
+
+    steps:
+      run: echo ${{ secrets.TEST }}
+
+  crawler:
+    runs-on: ubuntu-latest
+    if: >
+      ${{ inputs.tags == 'all' || inputs.tags == 'crawler' }}
+
+    steps:
+      run: echo ${{ secrets.TEST }}
